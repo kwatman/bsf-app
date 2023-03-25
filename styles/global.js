@@ -42,5 +42,13 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         backgroundColor: '#2A2C2E'
+    },
+    title: {
+        fontSize: 30,
+        color: 'white',
+        fontFamily: 'Arial'
+    },
+    whiteText: {
+        color: 'white'
     }
 });

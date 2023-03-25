@@ -3,6 +3,7 @@ import React, {useContext, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import notifee, {  TriggerType,TimeUnit  } from '@notifee/react-native';
 
 import Home from "./screens/Home";
 import Login from "./screens/Login";
@@ -12,12 +13,16 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Operations from "./screens/Operations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import OperationsStackScreen from "./screens/OperationsStackScreen";
+import Profile from './screens/Profile';
+
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
+
 function App() {
     const {auth,doLogin} = useContext(AuthContext)
-    
+
     return auth ? (
         <NavigationContainer>
             <Tab.Navigator screenOptions={({ route }) => ({
@@ -28,6 +33,9 @@ function App() {
                     }
                     if (route.name === 'Operations') {
                         iconName = 'game-controller'
+                    }
+                    if (route.name === 'Profile') {
+                        iconName = 'person-circle'
                     }
                     // You can return any component that you like here
                     return <Ionicons name={iconName} size={size} color={color} />;
@@ -42,6 +50,7 @@ function App() {
             })}>
                 <Tab.Screen name="Home" component={Home} options={{header: (props) => <Header title="Home" {...props}/>}}/>
                 <Tab.Screen name="Operations" component={OperationsStackScreen} options={{header: (props) => <Header title="Operations" {...props}/>}}/>
+                <Tab.Screen name="Profile" component={Profile} options={{header: (props) => <Header title="Profile" {...props}/>}}/>
             </Tab.Navigator>
         </NavigationContainer>
     ): (

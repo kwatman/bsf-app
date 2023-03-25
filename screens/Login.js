@@ -30,7 +30,6 @@ const Login =  () => {
                         { text: "OK", onPress: () => console.log("OK Pressed") }
                     ]);
             }else{
-                
                 doLogin(data.jwt)
             }
         }catch (error) {

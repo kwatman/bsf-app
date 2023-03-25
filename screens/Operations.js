@@ -14,7 +14,7 @@ function Operations({ navigation })  {
     const [refreshing, setRefreshing] = React.useState(false);
 
     const operationPressed = (operation) => {
-        console.log(operation.id)
+        navigation.navigate('Operation',{operation: operation.attributes})
     }
     
     const loadOps = async () => {
@@ -48,7 +48,6 @@ function Operations({ navigation })  {
                 pastOperations: pastOperations,
                 upcomingOperations: upcomingOperations
             }
-            console.log(upcomingOperations)
             setOperations(operations)
         }catch (error) {
             console.error(error);
@@ -62,9 +61,7 @@ function Operations({ navigation })  {
       }, []);
 
     useEffect(() => {
-        
         loadOps()
-        console.log(auth.data.role)
     }, [])
     
     return(

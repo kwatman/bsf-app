@@ -13,10 +13,6 @@ export function AuthProvider({children}){
     const doLogin = async (token) => {
         let decoded = jwtDecode(token)
 
-        let newAuth = {
-            token: token,
-            data: decoded
-        }
         await AsyncStorage.setItem('token', token)
         let response = await fetch(urlPrefix + '/api/users/me?populate=role', {
             method: 'GET',
@@ -26,7 +22,12 @@ export function AuthProvider({children}){
             }
         });
         let user = await response.json()
-        newAuth.role = user.role.name
+        let newAuth = {
+            token: token,
+            data: decoded,
+            role: user.role.name,
+            person: user
+        }
         console.log(newAuth)
         setAuth(newAuth);
 
