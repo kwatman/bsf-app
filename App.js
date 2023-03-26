@@ -14,12 +14,42 @@ import Operations from "./screens/Operations";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import OperationsStackScreen from "./screens/OperationsStackScreen";
 import Profile from './screens/Profile';
+import messaging from '@react-native-firebase/messaging';
 
 
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+let channelId;
+async function onAppBootstrap() {
+    channelId = await notifee.createChannel({
+        id: 'ops',
+        name: 'opsc'
+    });
+    console.log(channelId)
+    // Register the device with FCM
+    await messaging().registerDeviceForRemoteMessages();
+  
+    // Get the token
+    const token = await messaging().getToken();
+}
+
+async function onMessageReceived(message) {
+    console.log(message.notification)
+    await notifee.displayNotification({
+        title: message.notification.title,
+        body: message.notification.body,
+        android: {
+          channelId
+        },
+    });
+}
+  
+messaging().onMessage(onMessageReceived);
+messaging().setBackgroundMessageHandler(onMessageReceived);
+
+onAppBootstrap()
 function App() {
     const {auth,doLogin} = useContext(AuthContext)
 

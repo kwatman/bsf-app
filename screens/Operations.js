@@ -24,7 +24,8 @@ function Operations({ navigation })  {
             let upcomingOperations =[]
             response.data.forEach((operation) => {
                     let zerohour = new Date(operation.attributes.date)
-                    operation.zeroHour = zerohour.toLocaleString()
+                    operation.date = zerohour.getFullYear() + "/" + ('0' + (zerohour.getMonth() + 1)).slice(-2) + "/" + ('0' + (zerohour.getDay())).slice(-2) 
+                    operation.time = ('0' + (zerohour.getHours())).slice(-2)  + ":" + ('0' + (zerohour.getMinutes())).slice(-2)
                 }
             );
             response.data.forEach((operation) => {
@@ -32,7 +33,7 @@ function Operations({ navigation })  {
                 if (new Date(operation.attributes.date) < now) {
                     pastOperations.push(
                         <Pressable key={operation.id} style={{width: '80%', alignItems: 'center'}} onPress={() => operationPressed(operation)}>
-                            <OperationCard key={operation.id} title={operation.attributes.Title} date={operation.zeroHour}/>
+                            <OperationCard key={operation.id} title={operation.attributes.Title} date={operation.date} time={operation.time}/>
                         </Pressable>
                     )
                 }else{

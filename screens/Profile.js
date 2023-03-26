@@ -10,11 +10,17 @@ function Profile({ route,navigation })  {
 
     const [doFetch] = useFetch()
     const [participations,setParticipations] = useState(0)
-
+    const [refreshing, setRefreshing] = React.useState(false);
     const loadPaticipations = async () => {
         let response = await doFetch('GET', '/api/users/me?fields[0]=operations&populate[operations][fields][0]=id', null)
         setParticipations(response.operations.length)
     }
+
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        await loadPaticipations()
+        setRefreshing(false);
+      }, []);
 
 
     useEffect(() => {
@@ -23,7 +29,7 @@ function Profile({ route,navigation })  {
 
     return(
         <SafeAreaView style={globalStyles.baseContainer}>
-            <ScrollView style={{width: '100%', paddingLeft: 20, paddingRight: 20}} contentContainerStyle={{ alignItems: 'center'}}>
+            <ScrollView style={{width: '100%', paddingLeft: 20, paddingRight: 20}} contentContainerStyle={{ alignItems: 'center'}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 <Text style={globalStyles.title} >{auth.person.username}</Text>
                 <Text style={globalStyles.whiteText}>participations: {participations}</Text>
             </ScrollView>
