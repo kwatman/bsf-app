@@ -14,7 +14,8 @@ function Operations({ navigation })  {
     const [refreshing, setRefreshing] = React.useState(false);
 
     const operationPressed = (operation) => {
-        navigation.navigate('Operation',{operation: operation.attributes})
+        console.log(operation)
+        navigation.navigate('Operation',{operation: operation.attributes,date: operation.date, time: operation.time})
     }
     
     const loadOps = async () => {
