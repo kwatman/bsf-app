@@ -5,6 +5,7 @@ import AuthContext from "../context/AuthContext";
 import {globalStyles} from "../styles/global";
 import AppSettings from "../AppSettings.js";
 import useFetch from "../hooks/useFetch";
+import messaging from '@react-native-firebase/messaging';
 
 const Login =  () => {
 
@@ -22,6 +23,13 @@ const Login =  () => {
             }))
             let data = response
 
+            await messaging().registerDeviceForRemoteMessages();
+  
+            // Get the token
+            const token = await messaging().getToken();
+            let fcmResponse = await useFetch('POST', '/api/auth/local/fcm',JSON.stringify({
+                "token": token
+            }))
             if(data.error){
                 Alert.alert(
                     "Invalid credentials",

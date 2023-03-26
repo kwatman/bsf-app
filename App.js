@@ -28,11 +28,6 @@ async function onAppBootstrap() {
         name: 'opsc'
     });
     console.log(channelId)
-    // Register the device with FCM
-    await messaging().registerDeviceForRemoteMessages();
-  
-    // Get the token
-    const token = await messaging().getToken();
 }
 
 async function onMessageReceived(message) {
