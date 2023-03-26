@@ -24,7 +24,7 @@ function Operations({ navigation })  {
             let upcomingOperations =[]
             response.data.forEach((operation) => {
                     let zerohour = new Date(operation.attributes.date)
-                    operation.date = zerohour.getFullYear() + "/" + ('0' + (zerohour.getMonth() + 1)).slice(-2) + "/" + ('0' + (zerohour.getDay())).slice(-2) 
+                    operation.date = zerohour.getFullYear() + "/" + ('0' + (zerohour.getMonth() + 1)).slice(-2) + "/" + ('0' + (zerohour.getDate())).slice(-2) 
                     operation.time = ('0' + (zerohour.getHours())).slice(-2)  + ":" + ('0' + (zerohour.getMinutes())).slice(-2)
                 }
             );
@@ -39,7 +39,7 @@ function Operations({ navigation })  {
                 }else{
                     upcomingOperations.push(
                         <Pressable key={operation.id} style={{width: '80%', alignItems: 'center'}} onPress={() => operationPressed(operation)}>
-                            <OperationCard key={operation.id} title={operation.attributes.Title} date={operation.zeroHour}/>
+                            <OperationCard key={operation.id} title={operation.attributes.Title} date={operation.date} time={operation.time}/>
                         </Pressable>
                     )
                 }
@@ -67,8 +67,7 @@ function Operations({ navigation })  {
     
     return(
         <SafeAreaView style ={globalStyles.baseContainer}>
-            <ScrollView style={{width: '100%'}} contentContainerStyle={{ alignItems: 'center'}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
+            <ScrollView style={{width: '100%'}} contentContainerStyle={{ alignItems: 'center'}} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                 {auth.role === "Admin" ?     
                     <Pressable style={globalStyles.button} onPress={() => navigation.navigate('AddOperation')}>
                         <Text style={globalStyles.buttonText}>add new opperation</Text>
