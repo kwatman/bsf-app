@@ -2,6 +2,7 @@
 import Operations from "./Operations";
 import AddOperation from "./AddOperation";
 import Operation from "./Operation";
+import AddParticipant from "./AddParticipant";
 const OperationsStack = createNativeStackNavigator();
 
 function OperationsStackScreen() {
@@ -10,6 +11,7 @@ function OperationsStackScreen() {
             <OperationsStack.Screen name="OperationsList" component={Operations} />
             <OperationsStack.Screen name="AddOperation" component={AddOperation} />
             <OperationsStack.Screen name="Operation" component={Operation} />
+            <OperationsStack.Screen name="AddParticipant" component={AddParticipant} />
         </OperationsStack.Navigator>
     );
 }

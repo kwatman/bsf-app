@@ -15,7 +15,7 @@ function Operations({ navigation })  {
 
     const operationPressed = (operation) => {
         console.log(operation)
-        navigation.navigate('Operation',{operation: operation.attributes,date: operation.date, time: operation.time})
+        navigation.navigate('Operation',{opid: operation.id , operation: operation.attributes,date: operation.date, time: operation.time})
     }
     
     const loadOps = async () => {
@@ -77,16 +77,18 @@ function Operations({ navigation })  {
                     null
                 }
 
-                <Text style={{color: 'white'}}> Upcoming Operation</Text>
+                <Text style={{color: 'white'}}> Upcoming Operations</Text>
                 {operations.upcomingOperations != null ? operations.upcomingOperations :  <Text style={{color: 'white'}}> There are no upcoming operations</Text>}
                 <View
                     style={{
                         borderBottomColor: 'white',
                         borderBottomWidth: 1,
                         margin:20,
+                        marginBottom: 5,
                         width: '80%'
                     }}
                 />
+                <Text style={{color: 'white'}}> Past Operations</Text>
                 {operations.pastOperations}
             </ScrollView> 
         </SafeAreaView>
